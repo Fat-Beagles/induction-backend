@@ -117,15 +117,15 @@ app.post('/createUser', (req, res) => {
                     // See the UserRecord reference doc for the contents of userRecord.
                     console.log('Successfully created new user:', userRecord.uid);
                     var userData = {
-                        'branch': userData['Branch'],
-                        'allocation': userData['Final Allocation'],
+                        'branch': snap.val()['Branch'],
+                        'allocation': snap.val()['Final Allocation'],
                         "isVerified": false,
                         "groupCode": "Green",
                         "instaHandle": "",
                         "description": "",
                     }
                     var updates = {};
-                    updates['/users/' + userRecord.uid] = postData;
+                    updates['/users/' + userRecord.uid] = userData;
                     defaultDB.ref().update(updates)
                     res.send({'Success': true, 'Message': 'User Created Successfully!'})
                 })
