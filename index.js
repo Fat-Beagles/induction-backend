@@ -99,11 +99,12 @@ app.post('/applicationID', async (req, res, next) => {
 app.post('/createUser', (req, res) => {
     let verification = true
     let dbPoint = defaultDB.ref(`/StudentList`)
+    var userData
     dbPoint.child(req.body.applicationid).once('value', function(snap) {
         if (snap.val() == null || snap.val() == undefined) {
             res.json({success: false, result: {}, message: 'User Roll Number doesn\'t exist'})
         } else{
-            var userData = snap.val()
+            userData = snap.val()
             if (snap.val()['studentEmail'] == req.body.email) {
                 defaultAuth.createUser({
                     uid: req.body.applicationid,
