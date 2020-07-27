@@ -37,7 +37,7 @@ app.get('/applicationID', (req, res, next) => {
 })
 
 app.post('/createUser', (req, res) => {
-    let verification = await verifyUser()
+    let verification = true
     if (verification) {
         defaultAuth.createUser({
             email: req.body.email,
@@ -59,7 +59,7 @@ app.post('/createUser', (req, res) => {
 })
 
 async function verifyUser() {
-    return true;
+    return greeting = await Promise. resolve("Hello");
 }
 
 //defaultAuth.getUserByEmail(email)
