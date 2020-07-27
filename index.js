@@ -11,9 +11,21 @@ app.use(express.static('public'))
 
 
 // Firebase config
-var serviceAccount = require(".\\inductioniiitd2020-8b5d451ff02d.json");
+//var serviceAccount = require("inductioniiitd2020-8b5d451ff02d.json");
+var creds = {
+    "type": "service_account",
+    "project_id": "inductioniiitd2020",
+    "private_key_id": "8b5d451ff02d9efa59bb5269366a50376bb76fe0",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC5GZlJdJU/tXH0\nK6Xr5FdrCBFJmf8OIePH1lO26pqXswF+S7SFgUoL/OXaHz2OS0lzONhEuCm9/3nz\n/N2qmg0XFOj+1d+YR1E8xAq0nSXDwekuc7a+TuvkKIEiGK5L60Eo305vgEDBYK/2\n1BLWsXmaTMF65MCMvtU/Zo+6eENcOi0D4FuoXCwxgKto/TSLh3KEyzWOqv1xuEIY\nFpTruOelOx1bzxTSFiu07LNrSrE3iGJbG73pVfP62kqg3YHQJaziwpzxsFz+iGCH\nVAOufRlhA8T50VfsKfPHmVxpCmV4K8v/enATLGqSbFkjKWiN9twhzs3Dx5MYlAjd\nCupUZj8jAgMBAAECggEAQlh5F5moh2HfewAMJF2/sbb+D04Z3DRsgywA7J7xk29P\nmTfEeFfrtRlMP98TvsWgiaK17ge+uoHwcfJQd75o872EeBcr4lapuSihl7R+HUkL\nbiF+vn7mUWztQE3tZ3vm6qID6LZlP4sK92Nzby3E4vghH44PsEMUh3mZCeLibhM0\nQV4vF0f/3uxjqfAf+TQ4BlbseAQwFxAwbZfyHE1LUpKBEJ58zK9QUeTOerxHoiEZ\nNKHIZz9nQlSW43vsehm6omHD0T0NHSQe8uvOzYNDd5RnPhz8Vcm3VuxHLO8UZruT\ndBWfaiBv4WKzw3lLh9D023POHWAyJ84K3CSeDP0myQKBgQD9kb8YQwlxKAUAYl75\nklFzFDTFB/yDYSRLfAWhdRC3rpvYMOeIFLh80pCipQ24C+cDgdIs+V42xglWeuO5\nRmFVofVtW3fGEcGwRoMVEZ+8hju/znX32el17j2jLRdpHHod3DzOEt73Q6PcPsiq\nlBdDyMbFLv3rEDlKPClENLcnCQKBgQC639SA5Mp4kiLQx0q/PTv6dAxf5XiJMEAC\nr9/vWMf1jSnzlAVS9N5LzXYXZPs85a3KZLYayT/JLNzA/gJfFUrGulDIZLUS5hI/\nuwuqHuIBZ9Mv6UY3ovuIcL80gT3QOori/ccpEYzfEySQSeXVirVR3aXMSpcxV558\nJgMOAKezywKBgQD2l+SVPaxTBS5H/2KJpwfauE3RR0EEq1XWqtf2+pe1afNZPcYM\nisoXadcKtSUwVTLmMDwrTJ+Y+OJf3cbUiWNjGcxJ+2fxkZchTJFxzd/gQVKd57TF\nwn/OFlCO/e0EZZNEssfXSHbZVEhoig4wBTDS1NCpNlftX6u3S+Z91B5BsQKBgHbe\nH5bpcVzmX9z7l7Ezqy4xmRl6poRlO6I56zCdAXxREclNc2GEPs5q394brq/azQQ7\nsZYyQy+dKMJeEHYY3hqwsuf1HzTpQdxmBxJsWIhaWXxVXwPO2T69sPId74q/Yk7m\n7ENUVY4j6BMb3mVJuPJdEbR0Ed4iBL6lkzXZ9tKnAoGBALDKCzG5J+c8DJUzhVcD\nlvk3uy8WabF0noJn4KEtpyZMmVNfNXu/90NcuWbTg0iWC115Bruhvaj2I2aA3iiB\nLp+mRN9TzHKb72n3dQ31TyrCOMdE2EcOtmiMCfJRS7QUm2I6LIXVn5jbyoX55YAW\nanb42eZNYkpS4C7C9PhLRdP/\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-msqru@inductioniiitd2020.iam.gserviceaccount.com",
+    "client_id": "117300372020258712504",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-msqru%40inductioniiitd2020.iam.gserviceaccount.com"
+}
 var defaultApp = admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(creds),
     databaseURL: 'https://inductioniiitd2020.firebaseio.com/'
 })
 var defaultAuth = defaultApp.auth()
@@ -23,11 +35,10 @@ var defaultDB = defaultApp.database()
 //var email = "yatharth19346@iiitd.ac.in"
 
 app.get('/registration', (req, res, next) => {
-
     res.json('Registration view')
 })
 
-app.get('/applicationID', (req, res, next) => {
+app.post('/applicationID', (req, res, next) => {
     try {
         let applicationID = req.body.applicationid
     } catch (err) {
