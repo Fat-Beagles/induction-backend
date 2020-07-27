@@ -20,9 +20,7 @@ exports.addUserInfoToDatabase = functions.auth.user().onCreate((user) => {
         "isVerified": false,
         "groupCode": "Green",
         "instaHandle": "",
-        "branch": "",
         "description": "",
-        "instaHandle": ""
     }
     return admin.database().ref(`/users/${id}/`).set(DataToPut);
 });
