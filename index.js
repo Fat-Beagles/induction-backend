@@ -92,7 +92,7 @@ app.post('/applicationID', async (req, res, next) => {
         }*/
     } catch (err) {
         console.log("Error", err)
-        res.json({'Success': false, 'Message': 'Not a valid application ID or already registered user'})
+        res.json({'success': false, 'message': 'Not a valid application ID.'})
     }
 })
 
@@ -102,7 +102,7 @@ app.post('/createUser', (req, res) => {
     var userData
     dbPoint.child(req.body.applicationid).once('value', function(snap) {
         if (snap.val() == null || snap.val() == undefined) {
-            res.json({success: false, result: {}, message: 'User Roll Number doesn\'t exist'})
+            res.json({'success': false, result: {}, 'message': 'User Roll Number doesn\'t exist'})
         } else{
             userData = snap.val()
             if (snap.val()['studentEmail'] == req.body.email) {
@@ -127,15 +127,15 @@ app.post('/createUser', (req, res) => {
                     var updates = {};
                     updates['/users/' + userRecord.uid] = userData;
                     defaultDB.ref().update(updates)
-                    res.send({'Success': true, 'Message': 'User Created Successfully!'})
+                    res.json({'success': true, result: {}, 'message': 'User created successfully.'})
                 })
                 .catch(function(error) {
                     console.log('Error creating new user:', error);
-                    res.send({'Success': false, 'Message': 'User Creation Failed'})
+                    res.json({'success': false, result: {}, 'message': 'User creation failed.'})
 
                 });
             } else {
-                res.json({success: false, result: {}, message: 'Email and Username don\'t match'})
+                res.json({'success': false, result: {}, message: 'Email and Username don\'t match'})
             }
         }
     }) 
